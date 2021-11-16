@@ -45,10 +45,6 @@ class Objects {
 				if (!_.isString(pathLocal)) // noinspection ExceptionCaughtLocallyJS
 					throw new Error("Local path parameter is not a string.");
 
-				// check if file exist
-				if (!(await this.context.objects().exist(path))) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("File path does not seem to exist.");
-
 				let writeStream = fs.createWriteStream(pathLocal);
 
 				let file = (() => {
@@ -109,10 +105,6 @@ class Objects {
 					throw new Error("Path parameter is not a string.");
 				if (!_.includes(path, '/')) // noinspection ExceptionCaughtLocallyJS
 					throw new Error("Path parameter isn't valid : container/filename.ext.");
-
-				// check if file exist
-				if (!(await this.context.objects().exist(path))) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("File path does not seem to exist.");
 
 				let file = (() => {
 					let p = path.split('/');
@@ -370,12 +362,6 @@ class Objects {
 				if (!_.includes(pathToPaste, '/')) // noinspection ExceptionCaughtLocallyJS
 					throw new Error("Copy file path parameter isn't valid : container/filename.ext.");
 
-				// check if file exist
-				if (!(await this.context.objects().exist(pathOrigin))) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("Original file path path does not seem to exist.");
-				if (await this.context.objects().exist(pathToPaste)) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("A file with destination path already exist.");
-
 				let pathOriginFile = (() => {
 					let p = pathOrigin.split('/');
 					if (p[0] === "")
@@ -468,10 +454,6 @@ class Objects {
 						return (!_.isUndefined(e))
 					}).join('/');
 				})()
-
-				// check if file exist
-				if (!(await this.context.objects().exist(path))) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("File path does not seem to exist.");
 
 				// delete file
 				request({
@@ -653,10 +635,6 @@ class Objects {
 				if (!_.includes(path, '/')) // noinspection ExceptionCaughtLocallyJS
 					throw new Error("File path parameter isn't valid : container/filename.ext.");
 
-				// check if file exist
-				if (!(await this.context.objects().exist(path))) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("File path does not seem to exist.");
-
 				let file = (() => {
 					let p = path.split('/');
 					if (p[0] === "")
@@ -714,10 +692,6 @@ class Objects {
 					throw new Error("Datetime expiration is expected.");
 				if (!_.isDate(expire_date) && !moment(expire_date).isValid()) // noinspection ExceptionCaughtLocallyJS
 					throw new Error("Datetime expiration must be a valid datetime.");
-
-				// check if file exist
-				if (!(await this.context.objects().exist(path))) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("File path does not seem to exist.");
 
 				/** @type {Moment} **/
 				expire_date = (!moment.isMoment(expire_date) ? moment(expire_date) : expire_date);
@@ -785,10 +759,6 @@ class Objects {
 					throw new Error("Delete seconds isn't defined.");
 				if (!_.isNumber(delete_seconds)) // noinspection ExceptionCaughtLocallyJS
 					throw new Error("Delete seconds isn't an integer.");
-
-				// check if file exist
-				if (!(await this.context.objects().exist(path))) // noinspection ExceptionCaughtLocallyJS
-					throw new Error("File path does not seem to exist.");
 
 				request({
 					method: 'POST',
